@@ -8,7 +8,7 @@ close all;
 % Number of points for the polygon
 num = 12;
 % The opptions are 'c', 'l' and 'b'
-geometry = 'c';
+geometry = 'b';
 % Make geometry approximation
 points = mkGeom(num, geometry);
 

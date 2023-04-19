@@ -33,7 +33,9 @@ elseif( c == 'b')
 	% ###########################################################################
 	% use nrbeval from the nurbs package (https://octave.sourceforge.io/nurbs/)
 	crv = getBezierCurve();
-	assert("This geometry is not yet implemented!")
+	u = linspace(0, 1, n);
+	p = nrbeval(crv, u);
+	geom = p(1:2,:)';
 else
 	% example for the return of the function
 	geom = [0, 0;
