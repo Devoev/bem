@@ -17,13 +17,15 @@ if ( c == 'c')
   % #########################################################################
   % # Task 1a)
   % #########################################################################
-  assert("This geometry is not yet implemented!")
+    r = 1;
+    phi = linspace(0, 2*pi, n);
+    geom = r*[cos(phi); sin(phi)]';
 % Will construct an l-shape domain
 elseif( c == 'l')
   % #########################################################################
   % # Task 1b)
   % #########################################################################
-  assert("This geometry is not yet implemented!")
+    assert("This geometry is not yet implemented!")
 % construction of the Bezier curve
 elseif( c == 'b')
 	% ###########################################################################
