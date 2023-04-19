@@ -6,15 +6,16 @@ close all;
 % # Task 1
 % #############################################################################
 % Number of points for the polygon
-num = 12;
+num = 16;
 % The opptions are 'c', 'l' and 'b'
-geometry = 'b';
+geometry = 'l';
 % Make geometry approximation
 points = mkGeom(num, geometry);
 
 % Plotting
 figure(1)
 plot(points(:,1), points(:,2), 'linewidth', 2)
+% scatter(points(:,1), points(:,2))
 hold on
 axis('square')
 

@@ -25,7 +25,19 @@ elseif( c == 'l')
   % #########################################################################
   % # Task 1b)
   % #########################################################################
-    assert("This geometry is not yet implemented!")
+    a = 0.2;
+    m = fix((n-1)/8);
+    geom = a*[0,0; 0,1; 0,2; 1,2; 1,1; 2,1; 2,0; 1,0; 0,0];
+    for k = 1:m
+        size_g = size(geom);
+        old = geom;
+        geom = zeros(size(geom(:,1))*2);
+        for i = 1:(size_g(1)-1)
+            geom(2*i-1,:) = old(i,:)
+            geom(2*i,:) = (old(i,:) + old(i+1,:))/2;
+        end
+    end
+
 % construction of the Bezier curve
 elseif( c == 'b')
 	% ###########################################################################
