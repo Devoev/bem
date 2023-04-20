@@ -33,7 +33,7 @@ elseif( c == 'l')
         old = geom;
         geom = zeros(size(geom(:,1))*2);
         for i = 1:(size_g(1)-1)
-            geom(2*i-1,:) = old(i,:)
+            geom(2*i-1,:) = old(i,:);
             geom(2*i,:) = (old(i,:) + old(i+1,:))/2;
         end
     end
