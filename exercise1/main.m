@@ -6,9 +6,9 @@ close all;
 % # Task 1
 % #############################################################################
 % Number of points for the polygon
-num = 32;
+num = 12;
 % The opptions are 'c', 'l' and 'b'
-geometry = 'c';
+geometry = 'b';
 % Make geometry approximation
 points = mkGeom(num, geometry);
 
@@ -23,8 +23,8 @@ axis('square')
 % # Task 2
 % #############################################################################
 
-% colpts = 
-% rhs = 
-% plot(colpts(:,1), colpts(:,2), 'x')
+colpts = (points(1:end-1,:) + points(2:end,:)) / 2;
+rhs = data(colpts(:,1), colpts(:,2));
+plot(colpts(:,1), colpts(:,2), 'x')
 
-% plotRHS(geometry, points, colpts, rhs);
+plotRHS(geometry, points, colpts, rhs);
