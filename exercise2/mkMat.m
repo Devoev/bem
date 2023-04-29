@@ -12,14 +12,23 @@ function sysmat = mkMat(Geom)
 
     for i = 1:n
         for j = 1:n
-            xi = Geom(i,1);
-            y1 = Geom(j,2);
-            y2 = Geom(j+1,2);
-            %sysmat(i,j) = quadgk(@(y) fundamentalsol(xi,y), yj, yj2); % fixme: Change integration path
-            u0 = xi - y1;
-            u1 = xi - y2;
-            sysmat(i,j) = (u1*(log(abs(u1)) - 1) - u0*(log(abs(u0)) - 1)) / (-2*pi);
+            xi = Geom(i,:);
+            yj1 = Geom(j,:);
+            yj2 = Geom(j+1,:);
+            if i ~= j
+                sysmat(i,j) = quadgk(@(t) integrand(t, xi, yj1, yj2), 0, 1);
+            end
+%            u0 = xi - y1;
+%            u1 = xi - y2;
+%            sysmat(i,j) = (u1*(log(abs(u1)) - 1) - u0*(log(abs(u0)) - 1)) / (-2*pi);
         end
     end
 
+end
+
+function y = integrand(t, xi, yj1, yj2)
+    y = zeros(size(t));
+    for i = 1:length(t)
+        y(i) = fundamentalsol(xi, yj1*t(i) + yj2*(1-t(i))) * norm(yj2 - yj1);
+    end
 end
