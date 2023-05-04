@@ -13,17 +13,11 @@ function val = poteval(ptX,ptY,Geom,X)
             for k = 1:length(X)
                 y1 = Geom(k,:);
                 y2 = Geom(k+1,:);
-                val(i,j) = val(i,j) + quadgk(@(t) integrand(t, x, y1, y2), 0, 1) * X(k);
+                yt = @(t) y1*t + y2*(1-t); % parametrization of gamma_y
+                V = quadgk(@(t) arrayfun(@(ti) fundamentalsol(x, yt(ti)), t) * norm(y2 - y1), 0, 1);
+                val(i,j) = val(i,j) + V*X(k);
             end
         end
     end
 
 end
-
-function y = integrand(t, xi, yj1, yj2)
-    y = zeros(size(t));
-    for i = 1:length(t)
-        y(i) = fundamentalsol(xi, yj1*t(i) + yj2*(1-t(i))) * norm(yj2 - yj1);
-    end
-end
-

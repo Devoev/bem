@@ -16,9 +16,8 @@ function sysmat = mkMat(Geom)
             yj1 = Geom(j,:);
             yj2 = Geom(j+1,:);
             if i ~= j
-                % fixme
-                yt = @(t) yj1*t + yj2*(1-t);
-                sysmat(i,j) = quadgk(@(t) arrayfun(@(ti) fundamentalsol(xi, yt(t)'), t) * norm(yj2 - yj1), 0, 1);
+                yt = @(t) yj1*t + yj2*(1-t); % parametrization of gamma_y
+                sysmat(i,j) = quadgk(@(t) arrayfun(@(ti) fundamentalsol(xi, yt(ti)), t) * norm(yj2 - yj1), 0, 1);
             else
                 a = norm(yj1 - yj2);
                 sysmat(i,j) = -a * (log(a/2) - 1) / (2*pi);
