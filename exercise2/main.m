@@ -3,7 +3,7 @@ close all;
 
 % The approximate amount of elements to start with. The real number 
 % will be determined by mkGeom.
-num = 500;
+num = 30;
 
 % Choose Geometry and corresponding rhs. 'l' for LShape, 's' for circle
 geometry = 's';
