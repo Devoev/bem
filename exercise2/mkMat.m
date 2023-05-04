@@ -17,10 +17,10 @@ function sysmat = mkMat(Geom)
             yj2 = Geom(j+1,:);
             if i ~= j
                 sysmat(i,j) = quadgk(@(t) integrand(t, xi, yj1, yj2), 0, 1);
+            else
+                a = norm(yj1 - yj2);
+                sysmat(i,j) = -a * (log(a/2) - 1) / (2*pi);
             end
-%            u0 = xi - y1;
-%            u1 = xi - y2;
-%            sysmat(i,j) = (u1*(log(abs(u1)) - 1) - u0*(log(abs(u0)) - 1)) / (-2*pi);
         end
     end
 
