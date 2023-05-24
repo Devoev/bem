@@ -25,7 +25,23 @@ else
 	% #############################################################################
 	% # Task 4d)
 	% #############################################################################
-	assert("This should be implemented!");
+
+	for i = 1:n
+    		for j = 1:n
+    			if(i == j)
+    				% Uses the analytical solution
+    				sysmat(i,j) = analytSolCol(Geom(i,:),Geom(j+1,:)); % TODO: Galerkin analytical solution
+                else
+                    x0 = Geom(j,:);
+                    x1 = Geom(j+1,:);
+                    y0 = Geom(i,:);
+                    y1 = Geom(i+1,:);
+                    x = @(t) x0*t + x1*(1-t);
+                    y = @(s) y0*s + y1*(1-s);
+    				sysmat(i,j) = integral2(@(t,s) integralKernel(t, s, x, y), 0, 1, 0, 1); % TODO: Add jacobian det
+    			end
+    		end
+    	end
 end
 
 end
@@ -34,14 +50,24 @@ end
 % Analytical solution for the collocation singular case
 function val = analytSolCol(p1,p2)
     l = norm(p2-p1);
-	val = -(1./(2*pi))*l*(log(l/2)-1)
-	val1 = -l /(2*pi) * (log(l) - 4)
+	val = -(1./(2*pi))*l*(log(l/2)-1);
+	val1 = -l /(2*pi) * (log(l) - 4);
 end
 
 % Quadrature of the kernel wrt the collocation point colloc
 function val = quadratureCol(p1,p2,colloc)
     l =   norm(p1-p2); % length of the element
     fun = @(x) fundamentalsol(x*p1+(1-x)*p2,colloc);
-    val = l*quadgk(fun,0,1); % for octave, evaluation of the single layer integral
-    % val = l*integral(fun,0,1,'ArrayValued',1); % for matlab, evaluation of the single layer integral
+%    val = l*quadgk(fun,0,1); % for octave, evaluation of the single layer integral
+     val = l*integral(fun,0,1,'ArrayValued',1); % for matlab, evaluation of the single layer integral
+end
+
+function val = integralKernel(t, s, x, y)
+    [n,m] = size(t);
+    val = zeros(n,m);
+    for i = 1:n
+        for j = 1:m
+            val(i,j) = fundamentalsol(x(t(i,j)), y(s(i,j)));
+        end
+    end
 end
