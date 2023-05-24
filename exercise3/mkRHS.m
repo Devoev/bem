@@ -20,7 +20,13 @@ elseif(method == 'g')
 	% #############################################################################
 	% # Task 4c)
 	% #############################################################################
-	assert("This should be implemented!");
+
+	for i = 1:n
+    p1 = Geom(i)
+    p2 = Geom(i+1)
+    p = @(t) p1*t + p2*(1-t); % parametrization of p1 -> p2
+    rhs(i) = quadgk(@(t) data(p(t)(1),p(t)(2),c) * norm(p2 - p1), 0, 1); % TODO: Fix p(t)(1) and p(t)(2)
+    end
 
 end
 
