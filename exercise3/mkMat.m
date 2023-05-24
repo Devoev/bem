@@ -38,7 +38,7 @@ else
                     y1 = Geom(i+1,:);
                     x = @(t) x0*t + x1*(1-t);
                     y = @(s) y0*s + y1*(1-s);
-    				sysmat(i,j) = integral2(@(t,s) integralKernel(t, s, x, y), 0, 1, 0, 1); % TODO: Add jacobian det
+    				sysmat(i,j) = integral2(@(t,s) integralKernel(t, s, x, y) * norm(x1 - x0) * norm(y1 - y0), 0, 1, 0, 1);
     			end
     		end
     	end
@@ -67,7 +67,9 @@ function val = integralKernel(t, s, x, y)
     val = zeros(n,m);
     for i = 1:n
         for j = 1:m
-            val(i,j) = fundamentalsol(x(t(i,j)), y(s(i,j)));
+            xij = x(t(i,j));
+            yij = y(s(i,j));
+            val(i,j) = fundamentalsol(xij, yij);
         end
     end
 end
