@@ -30,7 +30,10 @@ else
     		for j = 1:n
     			if(i == j)
     				% Uses the analytical solution
-    				sysmat(i,j) = analytSolCol(Geom(i,:),Geom(j+1,:)); % TODO: Galerkin analytical solution
+    			    x0 = Geom(i,:);
+                    x1 = Geom(i+1,:);
+    			    m = norm(x0 - x1);
+    				sysmat(i,j) = (m^2*(3 - 2*log(m)))/(4*pi);
                 else
                     x0 = Geom(j,:);
                     x1 = Geom(j+1,:);
